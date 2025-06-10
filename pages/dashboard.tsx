@@ -47,9 +47,13 @@ export default function Dashboard() {
       }
       setMessage('Campaign sent successfully!');
       setFormData({ campaignId: '', emails: '', subject: '', content: '' });
-    } catch (error: any) {
-      setMessage(`Error sending campaign: ${error.message || 'Unknown error'}`);
-      console.error(error);
+    } catch (error: unknown) {
+        console.error('Error sending campaign:', error);
+        if (error instanceof Error) {
+            setMessage(`Error sending campaign: ${error.message}`);
+        } else {
+            setMessage('Error sending campaign: Unknown error');
+        }
     } finally {
       setSending(false);
     }

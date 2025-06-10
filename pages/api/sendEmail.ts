@@ -55,10 +55,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Push the log to Firebase
     await push(ref(database, 'emails'), emailLog);
-
     res.status(200).json({ success: true, messageId });
-  } catch (error: any) {
-    console.error('SendGrid Error:', error.response ? error.response.body : error);
-    res.status(500).json({ error: error.message || 'Error sending email' });
-  }
+
+  } catch (error: unknown) {
+        console.error('SendGrid Error:', error);
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message || 'Error sending email' });
+        } else if (typeof error === 'object' && error !== null && 'response' in error) {
+            const errObj = error as { response?: { body?: string } };
+            res.status(500).json({ error: errObj.response?.body || 'Error sending email' });
+        } else {
+            res.status(500).json({ error: 'An unknown error occurred' });
+        }
+    }
 }

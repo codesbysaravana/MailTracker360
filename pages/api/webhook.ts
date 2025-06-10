@@ -45,8 +45,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     res.status(200).json({ success: true });
-  } catch (error: any) {
-    console.error('Webhook processing error:', error);
-    res.status(500).json({ error: error.message || 'Error processing webhook' });
-  }
+  } catch (error: unknown) {
+        console.error('Webhook processing error:', error);
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message || 'Error processing webhook' });
+            } else {
+                res.status(500).json({ error: 'An unknown error occurred' });
+            }
+    }
 }
