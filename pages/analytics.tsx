@@ -1,6 +1,5 @@
-// pages/analytics.tsx
 import { useState, useEffect } from 'react';
-import { database } from '../lib/firebase'; // Adjust path if firebase.ts is in a different location
+import { database } from '../lib/firebase';
 import { ref, onValue } from 'firebase/database';
 
 interface EmailData {
@@ -76,8 +75,8 @@ export default function Analytics() {
         const data = snapshot.val();
         if (data) {
           const emailsArray = Object.entries(data).map(([key, value]) => ({
-            id: key,
-            ...(value as EmailData)
+            ...(value as Omit<EmailData, 'id'>),
+            id: key
           }));
           setEmails(emailsArray);
         } else {
@@ -97,8 +96,8 @@ export default function Analytics() {
         const data = snapshot.val();
         if (data) {
           const eventsArray = Object.entries(data).map(([key, value]) => ({
-            id: key,
-            ...(value as EventData)
+            ...(value as Omit<EventData, 'id'>),
+            id: key
           }));
           setEvents(eventsArray);
         } else {

@@ -29,32 +29,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Prepare data for CSV: Join emails with their corresponding events
     const dataForCsv: Array<Record<string, string | number>> = [];
 
-    Object.entries(emails).forEach(([emailKey, emailData]) => {
-      const emailMessageId = emailData.messageId;
-      const relatedEvents = Object.values(events).filter(event => event.messageId === emailMessageId);
+Object.values(emails).forEach((emailData) => {
+  const emailMessageId = emailData.messageId;
+  const relatedEvents = Object.values(events).filter(event => event.messageId === emailMessageId);
 
-      const opens = relatedEvents.filter(e => e.event === 'open').length;
-      const clicks = relatedEvents.filter(e => e.event === 'click').length;
-      const bounces = relatedEvents.filter(e => e.event === 'bounce').length;
-      const delivered = relatedEvents.filter(e => e.event === 'delivered').length;
+  const opens = relatedEvents.filter(e => e.event === 'open').length;
+  const clicks = relatedEvents.filter(e => e.event === 'click').length;
+  const bounces = relatedEvents.filter(e => e.event === 'bounce').length;
+  const delivered = relatedEvents.filter(e => e.event === 'delivered').length;
 
-      // Get latest open/click timestamp
-      const lastOpenTimestamp = Math.max(...relatedEvents.filter(e => e.event === 'open').map(e => e.timestamp), 0);
-      const lastClickTimestamp = Math.max(...relatedEvents.filter(e => e.event === 'click').map(e => e.timestamp), 0);
+  const lastOpenTimestamp = Math.max(...relatedEvents.filter(e => e.event === 'open').map(e => e.timestamp), 0);
+  const lastClickTimestamp = Math.max(...relatedEvents.filter(e => e.event === 'click').map(e => e.timestamp), 0);
 
-      dataForCsv.push({
-        campaignId: emailData.campaignId || 'N/A',
-        recipientEmail: emailData.to,
-        subject: emailData.subject,
-        sentAt: new Date(emailData.sentAt).toLocaleString(),
-        delivered: delivered > 0 ? 'Yes' : 'No',
-        opensCount: opens,
-        clicksCount: clicks,
-        bouncesCount: bounces,
-        lastOpenTime: lastOpenTimestamp > 0 ? new Date(lastOpenTimestamp * 1000).toLocaleString() : 'N/A',
-        lastClickTime: lastClickTimestamp > 0 ? new Date(lastClickTimestamp * 1000).toLocaleString() : 'N/A'
-      });
-    });
+  dataForCsv.push({
+    campaignId: emailData.campaignId || 'N/A',
+    recipientEmail: emailData.to,
+    subject: emailData.subject,
+    sentAt: new Date(emailData.sentAt).toLocaleString(),
+    delivered: delivered > 0 ? 'Yes' : 'No',
+    opensCount: opens,
+    clicksCount: clicks,
+    bouncesCount: bounces,
+    lastOpenTime: lastOpenTimestamp > 0 ? new Date(lastOpenTimestamp * 1000).toLocaleString() : 'N/A',
+    lastClickTime: lastClickTimestamp > 0 ? new Date(lastClickTimestamp * 1000).toLocaleString() : 'N/A'
+  });
+});
 
     // Generate CSV string
     const headers = [
