@@ -183,6 +183,7 @@ export default function Analytics() {
   }
 
   return (
+    <section id='analytics'>
     <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
       <h1>Email Campaign Analytics</h1>
       <p>Total Sent: {stats.totalSent}</p>
@@ -190,5 +191,6 @@ export default function Analytics() {
       <p>Click Rate: {stats.clickRate}%</p>
       <p>Bounce Rate: {stats.bounceRate}%</p>
     </div>
+    </section>
   );
 }

@@ -109,6 +109,9 @@ export default function Dashboard() {
           {message}
         </p>
       )}
+      <div>
+        <a href="#analytics">Analytics</a>
+      </div>
     </div>
   );
 }
