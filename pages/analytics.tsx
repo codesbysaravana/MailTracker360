@@ -1,5 +1,9 @@
+"use client"
+
 import { useState, useEffect } from 'react';
 import { BarChart3, Mail, MousePointer, TrendingUp, Users, AlertTriangle, CheckCircle, Eye, Loader2 } from 'lucide-react';
+import Head from 'next/head';
+
 
 interface EmailData {
   id: string;
@@ -203,6 +207,13 @@ export default function Analytics() {
   }
 
   return (
+    <>
+    <Head>
+      <title>Email Campaign Analytics</title>
+      <link rel="icon" type="image/png" href="/network.png" />
+    </Head>
+
+
     <section id="analytics" className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
@@ -345,5 +356,6 @@ export default function Analytics() {
         )}
       </div>
     </section>
+    </>
   );
 }

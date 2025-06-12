@@ -1,7 +1,10 @@
 "use client"
+
 import { useState } from 'react';
 import { Send, Mail, Users, BarChart3, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import Head from 'next/head';
+
 interface FormData {
   campaignId: string;
   emails: string;
@@ -91,6 +94,13 @@ export default function Dashboard() {
   };
 
   return (
+    <>
+    <Head>
+      <title>Email Campaign Dashboard</title>
+      <link rel="icon" type="image/png" href="/network.png" />
+    </Head>
+
+
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
@@ -223,5 +233,6 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+    </>
   );
 }
