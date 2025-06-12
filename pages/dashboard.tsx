@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
 import { Send, Mail, Users, BarChart3, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-
+import Link from 'next/link';
 interface FormData {
   campaignId: string;
   emails: string;
@@ -215,13 +215,10 @@ export default function Dashboard() {
 
           {/* Analytics Link */}
           <div className="mt-8 text-center">
-            <a
-              href="#analytics"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 text-gray-700 font-medium hover:bg-white/80 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-            >
-              <BarChart3 className="w-5 h-5" />
-              View Analytics
-            </a>
+            <Link href="/analytics" className="inline-flex items-center gap-2 px-6 py-3 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 text-gray-700 font-medium hover:bg-white/80 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <BarChart3 className="w-5 h-5" />
+                View Analytics
+            </Link>
           </div>
         </div>
       </div>
